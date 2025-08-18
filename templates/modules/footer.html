@@ -65,8 +65,7 @@
     <span class="mx-auto block max-w-7xl px-4 text-center text-sm text-gray-500 dark:text-slate-300 lg:px-6">
       ©
       <th:block th:text="${#dates.format(new java.util.Date().getTime(), 'yyyy')}" />
-      <a href="/" class="hover:underline" th:text="${site.title}"></a>. All Rights Reserved. Powered by
-      <a href="https://halo.run" class="hover:underline" target="_blank">Halo</a>.
+      <a href="/" class="hover:underline" th:text="${site.title}"></a>. All Rights Reserved
     </span>
     <span class="mx-auto block max-w-7xl px-4 text-center text-sm text-gray-500 dark:text-slate-300 lg:px-6">
       <halo:footer />
@@ -78,6 +77,7 @@
   <div class="mx-auto max-w-7xl px-4 md:flex md:justify-between md:gap-10 lg:px-6">
     <div class="mb-6 max-w-full md:mb-0 md:max-w-md">
       <a href="/" class="mb-6 flex items-center">
+        sssss
         <img
           th:if="${not #strings.isEmpty(theme.config.footer.logo)} or ${not #strings.isEmpty(site.logo)}"
           th:src="${theme.config.footer.logo ?: site.logo}"
@@ -96,28 +96,28 @@
       >
       </span>
     </div>
-    <div
-      th:unless="${#lists.isEmpty(theme.config.footer.menu_names)}"
-      class="grid grid-cols-2 gap-8 sm:grid-cols-4 sm:gap-12"
-    >
-      <th:block th:each="name : ${theme.config.footer.menu_names}">
-        <div th:with="menu = ${menuFinder.getByName(name)}">
-          <h2
-            class="mb-6 text-sm font-semibold text-gray-900 dark:text-slate-50"
-            th:text="${menu.spec.displayName}"
-          ></h2>
-          <ul th:with="menuItems = ${menu.menuItems}" class="text-sm text-gray-500 dark:text-slate-200">
-            <li th:each="menuItem : ${menuItems}" class="mb-4">
-              <a
-                th:href="@{${menuItem.status.href}}"
-                class="transition-all hover:text-gray-900 hover:underline dark:hover:text-white"
-                th:text="${menuItem.status.displayName}"
-                th:target="${menuItem.spec.target?.value}"
-              ></a>
-            </li>
-          </ul>
-        </div>
-      </th:block>
+    <div class="flex flex-col gap-4">
+      <h2 class="mt-2 text-lg font-medium dark:text-slate-50" th:text="友情链接"></h2>
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <a th:each="link : ${linkFinder.listBy('friends')}" th:href="${link.spec.url}" target="_blank">
+          <div
+            class="relative flex items-center space-x-3 rounded border border-gray-300 bg-white px-5 py-4 shadow-sm hover:border-gray-400 hover:shadow dark:border-slate-600 dark:bg-slate-700 dark:hover:border-slate-700"
+          >
+            <div class="flex-shrink-0">
+              <img class="size-12 rounded-full" th:src="${link.spec.logo}" th:alt="${link.spec.displayName}" />
+            </div>
+            <div class="min-w-0 flex-1">
+              <div>
+                <p
+                  class="truncate text-sm font-medium text-gray-900 dark:text-slate-100"
+                  th:text="${link.spec.displayName}"
+                ></p>
+                <p class="truncate text-sm text-gray-500 dark:text-slate-400" th:text="${link.spec.description}"></p>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
     </div>
 
     <!--/*Compatibility solution, will be removed in the future*/-->
@@ -148,11 +148,10 @@
   <hr class="my-6 border-gray-200 dark:border-slate-700 sm:mx-auto lg:my-8" />
   <div class="mx-auto flex max-w-7xl flex-col px-4 sm:flex-row sm:items-center sm:justify-between lg:px-6">
     <div class="flex flex-col space-y-1 text-center sm:text-left">
-      <span class="text-sm text-gray-500 dark:text-slate-300 sm:text-center">
+      <span class="text-sm text-gray-500 dark:text-slate-300 sm:text-left">
         ©
         <th:block th:text="${#dates.format(new java.util.Date().getTime(), 'yyyy')}" />
-        <a href="/" class="hover:underline" th:text="${site.title}"></a>. All Rights Reserved. Powered by
-        <a href="https://halo.run" class="hover:underline" target="_blank">Halo</a>.
+        <a href="/" class="hover:underline" th:text="${site.title}"></a>. All Rights Reserved.
       </span>
 
       <div class="flex flex-col gap-1 sm:flex-row">
@@ -182,7 +181,6 @@
           ></a>
         </div>
       </div>
-
       <p class="text-sm text-gray-500 dark:text-slate-300">
         <halo:footer />
       </p>
