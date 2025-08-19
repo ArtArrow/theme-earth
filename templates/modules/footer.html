@@ -95,30 +95,35 @@
       >
       </span>
     </div>
-    <div class="flex flex-col gap-4">
-      <h2 class="mt-2 text-lg font-medium dark:text-slate-50" th:text="友情链接"></h2>
-      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        <a th:each="link : ${linkFinder.listBy('friends')}" th:href="${link.spec.url}" target="_blank">
-          <div
-            class="relative flex items-center space-x-3 rounded border border-gray-300 bg-white px-5 py-4 shadow-sm hover:border-gray-400 hover:shadow dark:border-slate-600 dark:bg-slate-700 dark:hover:border-slate-700"
-          >
-            <div class="flex-shrink-0">
-              <img class="size-12 rounded-full" th:src="${link.spec.logo}" th:alt="${link.spec.displayName}" />
-            </div>
-            <div class="min-w-0 flex-1">
-              <div>
-                <p
-                  class="truncate text-sm font-medium text-gray-900 dark:text-slate-100"
-                  th:text="${link.spec.displayName}"
-                ></p>
-                <p class="truncate text-sm text-gray-500 dark:text-slate-400" th:text="${link.spec.description}"></p>
+    <div th:unless="${#lists.isEmpty(theme.config.footer.link_groups)}">
+      <th:block th:each="group : ${theme.config.footer.link_groups}">
+        <div class="flex flex-col gap-4">
+          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <a th:each="link : ${linkFinder.listBy(group)}" th:href="${link.spec.url}" target="_blank">
+              <div
+                class="relative flex items-center space-x-3 rounded border border-gray-300 bg-white px-5 py-4 shadow-sm hover:border-gray-400 hover:shadow dark:border-slate-600 dark:bg-slate-700 dark:hover:border-slate-700"
+              >
+                <div class="flex-shrink-0">
+                  <img class="size-12 rounded-full" th:src="${link.spec.logo}" th:alt="${link.spec.displayName}" />
+                </div>
+                <div class="min-w-0 flex-1">
+                  <div>
+                    <p
+                      class="truncate text-sm font-medium text-gray-900 dark:text-slate-100"
+                      th:text="${link.spec.displayName}"
+                    ></p>
+                    <p
+                      class="truncate text-sm text-gray-500 dark:text-slate-400"
+                      th:text="${link.spec.description}"
+                    ></p>
+                  </div>
+                </div>
               </div>
-            </div>
+            </a>
           </div>
-        </a>
-      </div>
+        </div>
+      </th:block>
     </div>
-
     <!--/*Compatibility solution, will be removed in the future*/-->
     <div
       th:if="${#lists.isEmpty(theme.config.footer.menu_names)} and ${not #lists.isEmpty(theme.config.footer.menus)}"

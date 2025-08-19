@@ -386,6 +386,19 @@ spec:
             labelField: "spec.displayName"
             valueField: "metadata.name"
 
+        - $formkit: select
+          name: link_groups
+          id: link_groups
+          key: link_groups
+          label: 链接组
+          value: []
+          multiple: true
+          sortable: true
+          action: "/apis/core.halo.run/v1alpha1/linkgroups"
+          requestOption:
+            labelField: "spec.displayName"
+            valueField: "metadata.name"
+
         - $formkit: repeater
           name: social_media
           label: 社交媒体
